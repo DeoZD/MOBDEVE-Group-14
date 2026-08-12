@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary_green">#2E7D32</color>
+    <color name="freshness_1">#4CAF50</color>
+    <color name="freshness_2">#FF9800</color>
+    <color name="freshness_3">#F4511E</color>
+    <color name="background_light">#F5F5F5</color>
+    <color name="text_dark">#1B1F1C</color>
+    <color name="emerald_unselected">#A5D6A7</color>
 </resources>

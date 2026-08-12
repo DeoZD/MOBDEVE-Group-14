@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
-    tools:context=".MainActivity">
+    android:background="@color/background_light">
 
     <View
         android:id="@+id/header_bar"
@@ -18,14 +17,14 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="@string/food_item_list_view"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/header_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/header_bar" />
+        app:layout_constraintTop_toTopOf="@id/header_bar"
+        app:layout_constraintVertical_bias="0.47"
+        tools:layout_editor_absoluteX="16dp" />
 
     <ImageView
         android:id="@+id/iv_logo_small"
@@ -33,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/app_name"
         android:src="@drawable/logo_light_svg"
         app:layout_constraintBottom_toBottomOf="@id/header_bar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,12 +42,10 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
-        android:autofillHints="name"
         android:background="@drawable/search_bg"
-        android:drawableStart="@drawable/search"
+        android:drawableStart="@android:drawable/ic_menu_search"
         android:drawablePadding="8dp"
         android:hint="@string/search_food_item"
-        android:inputType="text"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:textSize="14sp"
@@ -75,7 +71,6 @@
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_all"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,28 +79,24 @@
                 android:textColor="@color/white" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_fridge"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Refrigerator" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_freezer"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Freezer" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_pantry"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pantry" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_expiring"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,7 +105,6 @@
                 app:chipIconTint="@color/freshness_2" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_critical"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,33 +116,20 @@
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFoodList"
+        android:id="@+id/rv_food_items"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toBottomOf="@id/hsv_filters" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddFood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:visibility="gone"
-        android:src="@android:drawable/ic_input_add"
-        android:contentDescription="Add Food"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary_green"
-        app:itemActiveIndicatorStyle="@null"
-        app:itemIconTint="@color/nav_item_tint"
-        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 

@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">FridYI</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_storage">Storage</string>
+    <string name="nav_list">List</string>
+    <string name="nav_add">Add</string>
+    <string name="nav_profile">Profile</string>
+    <string name="start_view">Start View</string>
+    <string name="get_started">Get Started</string>
+    <string name="link_google">Link Google Account</string>
+    <string name="help">Help</string>
+    <string name="food_storage_view">Food Storage View</string>
+    <string name="search_food_storage">Search for food storage unit…</string>
+    <string name="food_item_list_view">Food Item List View</string>
+    <string name="search_food_item">Search for food item…</string>
+    <string name="food_item_input_view">Food Item Input View</string>
+    <string name="food_item_input_options">Food Item Input Options</string>
+    <string name="simple_scan">Simple scan</string>
+    <string name="bar_scan">Bar scan</string>
+    <string name="manual_input">Manual input</string>
+    <string name="add_food_item">Add Food Item</string>
 </resources>

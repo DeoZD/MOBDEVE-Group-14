@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,12 +25,38 @@ class AddFoodActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_food)
 
         val etName = findViewById<EditText>(R.id.etName)
-        val etQuantity = findViewById<EditText>(R.id.etQuantity)
-        val etUnit = findViewById<EditText>(R.id.etUnit)
         val etLocation = findViewById<EditText>(R.id.etLocation)
-        val etCategory = findViewById<EditText>(R.id.etCategory)
-        val etDays = findViewById<EditText>(R.id.etDaysToExpire)
+        val etExpiration = findViewById<EditText>(R.id.etExpiration)
         val btnSave = findViewById<Button>(R.id.btnSave)
+
+        // Setup Bottom Navigation
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.nav_add
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.nav_storage -> {
+                    startActivity(Intent(this, StorageActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.nav_list -> {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.nav_add -> true
+                R.id.nav_profile -> {
+                    // startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -39,19 +66,16 @@ class AddFoodActivity : AppCompatActivity() {
 
         btnSave.setOnClickListener {
             val name = etName.text.toString().trim()
-            val qtyStr = etQuantity.text.toString().trim()
-            val unit = etUnit.text.toString().trim()
             val location = etLocation.text.toString().trim()
-            val category = etCategory.text.toString().trim()
-            val daysStr = etDays.text.toString().trim()
+            val expirationStr = etExpiration.text.toString().trim()
 
-            if (name.isEmpty() || qtyStr.isEmpty() || daysStr.isEmpty()) {
+            if (name.isEmpty() || expirationStr.isEmpty()) {
                 Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val quantity = qtyStr.toDoubleOrNull() ?: 1.0
-            val daysToExpire = daysStr.toIntOrNull() ?: 1
+            // Simple logic to parse days from expiration string for now
+            val daysToExpire = expirationStr.toIntOrNull() ?: 1
 
             // Calculate dates in milliseconds
             val currentTime = System.currentTimeMillis()
@@ -62,10 +86,10 @@ class AddFoodActivity : AppCompatActivity() {
 
             val foodItem = FoodItem(
                 name = name,
-                quantity = quantity,
-                unit = if (unit.isEmpty()) "pcs" else unit,
+                quantity = 1.0,
+                unit = "pcs",
                 storageLocation = if (location.isEmpty()) "Fridge" else location,
-                category = if (category.isEmpty()) "General" else category,
+                category = "General",
                 dateLogged = currentTime,
                 expirationDate = expirationTime
             )
