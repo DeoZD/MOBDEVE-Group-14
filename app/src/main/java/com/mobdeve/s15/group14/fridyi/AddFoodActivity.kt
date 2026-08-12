@@ -24,6 +24,10 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,9 +42,14 @@ class AddFoodActivity : AppCompatActivity() {
 
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
-            selectedImageUri = it
-            ivPreview.setImageURI(it)
-            ivPreview.setPadding(0, 0, 0, 0)
+            val savedUri = saveImageToInternalStorage(it)
+            if (savedUri != null) {
+                selectedImageUri = savedUri
+                ivPreview.setImageURI(savedUri)
+                ivPreview.setPadding(0, 0, 0, 0)
+            } else {
+                Toast.makeText(this, "Failed to load image from gallery", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -48,10 +57,7 @@ class AddFoodActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             val bitmap = result.data?.extras?.get("data") as? Bitmap
             if (bitmap != null) {
-                ivPreview.setImageBitmap(bitmap)
-                ivPreview.setPadding(0, 0, 0, 0)
-                // Placeholder URI for camera captured image
-                selectedImageUri = Uri.parse("content://camera_captured_bitmap")
+                showPhotoConfirmationDialog(bitmap)
             }
         }
     }
@@ -119,7 +125,7 @@ class AddFoodActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             Toast.makeText(this@AddFoodActivity, "Item Saved Successfully!", Toast.LENGTH_SHORT).show()
                             
-                            // Clear fields instead of finishing, to stay on the screen
+                            // Clear fields
                             etName.text.clear()
                             etQuantity.text.clear()
                             etExpiration.text.clear()
@@ -161,6 +167,66 @@ class AddFoodActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Toast.makeText(this, "Layout Error: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun showPhotoConfirmationDialog(bitmap: Bitmap) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_photo_preview, null)
+        val ivDialogPreview = dialogView.findViewById<ImageView>(R.id.iv_dialog_preview)
+        ivDialogPreview.setImageBitmap(bitmap)
+
+        AlertDialog.Builder(this)
+            .setTitle("Confirm Photo")
+            .setView(dialogView)
+            .setPositiveButton("Confirm") { _, _ ->
+                val savedUri = saveBitmapToInternalStorage(bitmap)
+                if (savedUri != null) {
+                    selectedImageUri = savedUri
+                    ivPreview.setImageBitmap(bitmap)
+                    ivPreview.setPadding(0, 0, 0, 0)
+                } else {
+                    Toast.makeText(this, "Failed to save photo", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNeutralButton("Retake") { _, _ ->
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                cameraLauncher.launch(intent)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun saveImageToInternalStorage(uri: Uri): Uri? {
+        return try {
+            val inputStream: InputStream? = contentResolver.openInputStream(uri)
+            val fileName = "food_${System.currentTimeMillis()}.jpg"
+            val file = File(filesDir, fileName)
+            val outputStream = FileOutputStream(file)
+            
+            inputStream?.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun saveBitmapToInternalStorage(bitmap: Bitmap): Uri? {
+        return try {
+            val fileName = "food_${System.currentTimeMillis()}.jpg"
+            val file = File(filesDir, fileName)
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 
@@ -209,7 +275,6 @@ class AddFoodActivity : AppCompatActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Android 12+ check for exact alarms
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (alarmManager.canScheduleExactAlarms()) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTimeMillis, pendingIntent)
