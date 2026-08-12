@@ -26,7 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         // 2. Setup RecyclerView with Adapter
         val recyclerView = findViewById<RecyclerView>(R.id.rvFoodList)
-        adapter = FoodAdapter(emptyList())
+        adapter = FoodAdapter(emptyList()) { foodItem ->
+            val intent = Intent(this, AddFoodActivity::class.java).apply {
+                putExtra("FOOD_ID", foodItem.id)
+            }
+            startActivity(intent)
+        }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 

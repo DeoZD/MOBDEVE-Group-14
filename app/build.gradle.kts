@@ -42,6 +42,15 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // ML Kit Text Recognition (Free, On-Device)
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+
+    // Generative AI SDK (Optional for Gemini integration)
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
+    // Coil for image loading
+    implementation("io.coil-kt:coil:2.7.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

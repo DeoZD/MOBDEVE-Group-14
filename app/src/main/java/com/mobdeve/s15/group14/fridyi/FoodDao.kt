@@ -20,4 +20,12 @@ interface FoodDao {
     // 4. Custom filter: Get items by a specific storage location
     @Query("SELECT * FROM food_inventory WHERE storageLocation = :location")
     fun getFoodByLocation(location: String): List<FoodItem>
+
+    // 5. Get a specific food item by ID
+    @Query("SELECT * FROM food_inventory WHERE id = :id")
+    fun getFoodById(id: Long): FoodItem?
+
+    // 6. Update an existing food item
+    @Update
+    fun updateFoodItem(foodItem: FoodItem)
 }

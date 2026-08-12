@@ -10,11 +10,29 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvAddFoodTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Item to Inventory"
             android:textSize="22sp"
             android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <ImageView
+            android:id="@+id/ivSelectedImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera"
+            android:contentDescription="Selected Food Image" />
+
+        <Button
+            android:id="@+id/btnSelectImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Image / Scan Text"
             android:layout_marginBottom="16dp" />
 
         <EditText
@@ -43,12 +61,6 @@
             android:hint="Storage Location (e.g. Fridge)" />
 
         <EditText
-            android:id="@+id/etCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Category (e.g. Dairy)" />
-
-        <EditText
             android:id="@+id/etDaysToExpire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +73,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Save Item" />
+
+        <!-- DEBUG MODE BUTTON -->
+        <Button
+            android:id="@+id/btnDebugAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#D32F2F"
+            android:text="Trigger Test Alarm (5s Debug)" />
 
     </LinearLayout>
 </ScrollView>
