@@ -20,4 +20,10 @@ interface FoodDao {
     // 4. Custom filter: Get items by a specific storage location
     @Query("SELECT * FROM food_inventory WHERE storageLocation = :location")
     fun getFoodByLocation(location: String): List<FoodItem>
+
+    @Query("DELETE FROM food_inventory WHERE storageLocation = :location")
+    fun deleteFoodByLocation(location: String): Int
+
+    @Query("SELECT * FROM food_inventory WHERE name LIKE :query OR storageLocation LIKE :query")
+    fun searchFoodItems(query: String): List<FoodItem>
 }

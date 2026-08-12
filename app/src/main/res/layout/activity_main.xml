@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@color/primary_green"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -57,14 +59,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_bar" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_storage_filter"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Storage Locations"
+        android:textAllCaps="false"
+        android:textColor="@color/primary_green"
+        app:icon="@android:drawable/ic_menu_sort_by_size"
+        app:iconTint="@color/primary_green"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_search"
+        app:strokeColor="@color/primary_green" />
+
     <HorizontalScrollView
         android:id="@+id/hsv_filters"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_storage_filter"
         app:layout_constraintTop_toBottomOf="@id/et_search">
 
         <com.google.android.material.chip.ChipGroup
@@ -72,43 +91,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:singleLine="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_all"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All items"
-                app:chipBackgroundColor="@color/primary_green"
-                android:textColor="@color/white" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_fridge"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Refrigerator" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_freezer"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Freezer" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_pantry"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pantry" />
+            app:singleSelection="false">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_expiring"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/chip_background_selector"
+                android:textColor="@color/chip_text_selector"
                 android:text="Expiring soon"
                 app:chipIcon="@android:drawable/ic_dialog_alert"
                 app:chipIconTint="@color/freshness_2" />
@@ -118,7 +109,9 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Critical Alert"
+                app:chipBackgroundColor="@color/chip_background_selector"
+                android:textColor="@color/chip_text_selector"
+                android:text="Expired"
                 app:chipIcon="@android:drawable/ic_dialog_alert"
                 app:chipIconTint="@color/freshness_3" />
 

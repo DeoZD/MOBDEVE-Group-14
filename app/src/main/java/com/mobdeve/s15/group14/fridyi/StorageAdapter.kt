@@ -7,7 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class StorageAdapter(private val storageList: List<StorageItem>) :
+class StorageAdapter(
+    private val storageList: List<StorageItem>,
+    private val onItemClick: (StorageItem) -> Unit,
+    private val onItemLongClick: (StorageItem) -> Unit
+) :
     RecyclerView.Adapter<StorageAdapter.StorageViewHolder>() {
 
     class StorageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -18,6 +22,7 @@ class StorageAdapter(private val storageList: List<StorageItem>) :
         val tvExpiring: TextView = itemView.findViewById(R.id.tv_expiring_count)
         val tvCritical: TextView = itemView.findViewById(R.id.tv_critical_count)
         val tvTotal: TextView = itemView.findViewById(R.id.tv_total_items)
+        val ivDelete: ImageView = itemView.findViewById(R.id.iv_delete_storage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StorageViewHolder {
@@ -34,6 +39,11 @@ class StorageAdapter(private val storageList: List<StorageItem>) :
         holder.tvExpiring.text = "${item.expiringCount}/${item.totalItems}"
         holder.tvCritical.text = "${item.criticalCount}/${item.totalItems}"
         holder.tvTotal.text = "${item.totalItems} Items"
+
+        holder.itemView.setOnClickListener { onItemClick(item) }
+        holder.ivDelete.setOnClickListener {
+            onItemLongClick(item)
+        }
     }
 
     override fun getItemCount(): Int = storageList.size

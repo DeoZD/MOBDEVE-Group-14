@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/iv_food_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@android:drawable/ic_menu_gallery"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -28,10 +28,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:text="Frozen Chicken"
             android:textColor="@color/text_dark"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tvQuantity"
             app:layout_constraintStart_toEndOf="@id/iv_food_image"
@@ -47,6 +47,16 @@
             app:layout_constraintTop_toBottomOf="@id/tvFoodName" />
 
         <TextView
+            android:id="@+id/tv_date_added"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Added: 05/20/2024"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/tvFoodName"
+            app:layout_constraintTop_toBottomOf="@id/tv_storage_location" />
+
+        <TextView
             android:id="@+id/tvQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,8 +69,8 @@
         <View
             android:id="@+id/status_bar"
             android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="12dp"
             android:background="@color/freshness_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,8 +80,21 @@
             android:id="@+id/tvExpiration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+            android:layout_marginStart="8dp"
             android:text="JUN-06-27"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/status_bar"
+            app:layout_constraintStart_toStartOf="@id/status_bar"
+            app:layout_constraintTop_toTopOf="@id/status_bar" />
+
+        <TextView
+            android:id="@+id/tv_time_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="3 days left"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"

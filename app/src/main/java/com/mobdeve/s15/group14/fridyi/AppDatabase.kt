@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [FoodItem::class], version = 1, exportSchema = false)
+@Database(entities = [FoodItem::class, StorageType::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun foodDao(): FoodDao
+    abstract fun storageDao(): StorageDao
 
     companion object {
         // Volatile ensures that changes to INSTANCE are immediately visible to other threads

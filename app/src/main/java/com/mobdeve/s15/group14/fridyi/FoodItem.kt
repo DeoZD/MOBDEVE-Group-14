@@ -15,5 +15,6 @@ data class FoodItem(
     val storageLocation: String,
     val category: String,
     val dateLogged: Long,       // Changed to Long for SQLite compatibility
-    val expirationDate: Long    // Changed to Long for SQLite compatibility
+    val expirationDate: Long,    // Changed to Long for SQLite compatibility
+    val imageUri: String? = null
 )

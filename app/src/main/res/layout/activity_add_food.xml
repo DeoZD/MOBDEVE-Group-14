@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@color/primary_green"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -206,15 +208,47 @@
                         android:paddingHorizontal="12dp"
                         android:textSize="14sp" />
 
-                    <EditText
-                        android:id="@+id/etLocation"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/et_quantity"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/search_bg"
+                            android:hint="Quantity"
+                            android:inputType="numberDecimal"
+                            android:paddingHorizontal="12dp"
+                            android:textSize="14sp" />
+
+                        <Spinner
+                            android:id="@+id/sp_unit"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/search_bg" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/sp_storage"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/search_bg"
-                        android:hint="Enter storage..."
-                        android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:background="@drawable/search_bg" />
+
+                    <TextView
+                        android:id="@+id/tv_no_storage_warning"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Please add a storage type first!"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:visibility="gone" />
 
                     <EditText
                         android:id="@+id/etExpiration"
@@ -224,7 +258,9 @@
                         android:background="@drawable/search_bg"
                         android:hint="Enter food item expiration..."
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:focusable="false"
+                        android:clickable="true" />
 
                     <Button
                         android:id="@+id/btnSave"

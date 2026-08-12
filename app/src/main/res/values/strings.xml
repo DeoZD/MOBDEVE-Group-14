@@ -19,4 +19,27 @@
     <string name="bar_scan">Bar scan</string>
     <string name="manual_input">Manual input</string>
     <string name="add_food_item">Add Food Item</string>
+    <string name="expiring_soon">Expiring Soon</string>
+    <string name="expired">Expired</string>
+    <string name="recipe_suggestions_title">Recipes Suggestions for Your Storage</string>
+    <string name="click_for_more_details">Click for more details</string>
+    <string name="add_storage_type">Add Storage Type</string>
+    <string name="storage_name">Storage Name</string>
+    <string name="storage_description">Description</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="delete_storage_title">Delete Storage</string>
+    <string name="delete_storage_message">Are you sure you want to delete this storage? All items in it will also be deleted.</string>
+    <string name="delete">Delete</string>
+
+    <string-array name="units_array">
+        <item>pcs</item>
+        <item>kg</item>
+        <item>g</item>
+        <item>ml</item>
+        <item>L</item>
+        <item>pack</item>
+        <item>bottle</item>
+        <item>can</item>
+    </string-array>
 </resources>
