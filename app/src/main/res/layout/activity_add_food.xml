@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/logo_light_svg"
         app:layout_constraintBottom_toBottomOf="@id/header_bar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,11 +66,15 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
+                <!-- Simple Scan (OCR trigger) -->
                 <LinearLayout
+                    android:id="@+id/ll_simple_scan"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/search_bg"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp">
@@ -77,6 +82,7 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
+                        android:contentDescription="@string/simple_scan"
                         android:src="@android:drawable/ic_menu_camera"
                         app:tint="@color/primary_green" />
 
@@ -94,11 +100,15 @@
                     android:layout_width="16dp"
                     android:layout_height="match_parent" />
 
+                <!-- Barcode Scan -->
                 <LinearLayout
+                    android:id="@+id/ll_barcode_scan"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/search_bg"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp">
@@ -106,6 +116,7 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
+                        android:contentDescription="@string/bar_scan"
                         android:src="@android:drawable/ic_menu_gallery"
                         app:tint="@color/primary_green" />
 
@@ -120,6 +131,7 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- Manual Input Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,6 +144,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:contentDescription="@string/manual_input"
                     android:src="@android:drawable/ic_menu_edit"
                     app:tint="@color/white" />
 
@@ -168,7 +181,9 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:background="@drawable/search_bg"
+                            android:contentDescription="@string/food_item_input_view"
                             android:padding="16dp"
+                            android:scaleType="centerCrop"
                             android:src="@android:drawable/ic_menu_gallery"
                             app:tint="#CCCCCC" />
 
@@ -199,7 +214,7 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/etName"
+                        android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="16dp"
@@ -251,26 +266,39 @@
                         android:visibility="gone" />
 
                     <EditText
-                        android:id="@+id/etExpiration"
+                        android:id="@+id/et_expiration"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/search_bg"
+                        android:clickable="true"
+                        android:focusable="false"
                         android:hint="Enter food item expiration..."
                         android:paddingHorizontal="12dp"
-                        android:textSize="14sp"
-                        android:focusable="false"
-                        android:clickable="true" />
+                        android:textSize="14sp" />
 
                     <Button
-                        android:id="@+id/btnSave"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/btn_save"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="20dp"
                         android:backgroundTint="@color/freshness_1"
                         android:text="@string/add_food_item"
                         android:textAllCaps="false" />
+
+                    <!-- Debug/Test Notification Trigger (5 Seconds) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_test_notification"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Debug: Test Expiration Notification (5s)"
+                        android:textAllCaps="false"
+                        android:textColor="@color/freshness_2"
+                        app:icon="@android:drawable/ic_popup_reminder"
+                        app:iconTint="@color/freshness_2"
+                        app:strokeColor="@color/freshness_2" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

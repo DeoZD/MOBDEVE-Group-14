@@ -122,6 +122,7 @@ class StorageActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_storage, null)
         val etName = dialogView.findViewById<EditText>(R.id.et_storage_name)
         val etDesc = dialogView.findViewById<EditText>(R.id.et_storage_desc)
+        val rgIcon = dialogView.findViewById<android.widget.RadioGroup>(R.id.rg_icon_selection)
 
         AlertDialog.Builder(this)
             .setTitle(R.string.add_storage_type)
@@ -129,10 +130,16 @@ class StorageActivity : AppCompatActivity() {
             .setPositiveButton(R.string.add) { _, _ ->
                 val name = etName.text.toString().trim()
                 val desc = etDesc.text.toString().trim()
+                val iconResId = when (rgIcon.checkedRadioButtonId) {
+                    R.id.rb_freezer -> R.drawable.freezer_icon
+                    R.id.rb_crisper -> R.drawable.crisper_icon
+                    else -> R.drawable.ref_icon
+                }
+                
                 if (name.isNotEmpty()) {
                     lifecycleScope.launch(Dispatchers.IO) {
                         database.storageDao().insertStorageType(
-                            StorageType(name = name, description = desc, iconResId = R.drawable.ref_icon)
+                            StorageType(name = name, description = desc, iconResId = iconResId)
                         )
                         loadData()
                     }

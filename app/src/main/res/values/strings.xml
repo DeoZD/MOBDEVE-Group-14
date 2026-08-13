@@ -31,6 +31,10 @@
     <string name="delete_storage_title">Delete Storage</string>
     <string name="delete_storage_message">Are you sure you want to delete this storage? All items in it will also be deleted.</string>
     <string name="delete">Delete</string>
+    <string name="select_icon">Select Icon</string>
+    <string name="icon_fridge">Fridge</string>
+    <string name="icon_freezer">Freezer</string>
+    <string name="icon_crisper">Crisper</string>
 
     <string-array name="units_array">
         <item>pcs</item>

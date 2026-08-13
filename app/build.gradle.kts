@@ -24,6 +24,9 @@ android {
             }
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -31,13 +34,17 @@ android {
 }
 
 dependencies {
+    // AndroidX & Material
     implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    
-    // Room
+    implementation(libs.androidx.constraintlayout)
+
+    // Google ML Kit Text Recognition (Bundled Model)
+    implementation(libs.google.mlkit.text.recognition)
+
+    // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)

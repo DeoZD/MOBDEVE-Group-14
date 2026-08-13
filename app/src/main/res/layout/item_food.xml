@@ -17,6 +17,7 @@
             android:id="@+id/iv_food_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:contentDescription="@string/food_item_list_view"
             android:scaleType="centerCrop"
             android:src="@android:drawable/ic_menu_gallery"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -24,47 +25,75 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvFoodName"
+            android:id="@+id/tv_food_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:text="Frozen Chicken"
             android:textColor="@color/text_dark"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/tvQuantity"
+            app:layout_constraintEnd_toStartOf="@id/tv_quantity"
             app:layout_constraintStart_toEndOf="@id/iv_food_image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Frozen Chicken" />
 
         <TextView
             android:id="@+id/tv_storage_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Freezer"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@id/tvFoodName"
-            app:layout_constraintTop_toBottomOf="@id/tvFoodName" />
+            app:layout_constraintStart_toStartOf="@id/tv_food_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_food_name"
+            tools:text="Freezer" />
 
         <TextView
             android:id="@+id/tv_date_added"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Added: 05/20/2024"
             android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="@id/tvFoodName"
-            app:layout_constraintTop_toBottomOf="@id/tv_storage_location" />
+            app:layout_constraintStart_toStartOf="@id/tv_food_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_storage_location"
+            tools:text="Added: 05/20/2024" />
 
         <TextView
-            android:id="@+id/tvQuantity"
+            android:id="@+id/tv_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:text="2kg bag"
+            android:layout_marginEnd="8dp"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/ib_edit"
+            app:layout_constraintEnd_toStartOf="@id/ib_edit"
+            app:layout_constraintTop_toTopOf="@id/ib_edit"
+            tools:text="2kg bag" />
+
+        <ImageButton
+            android:id="@+id/ib_edit"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/manual_input"
+            android:padding="4dp"
+            android:src="@android:drawable/ic_menu_edit"
+            app:layout_constraintEnd_toStartOf="@id/ib_delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primary_green" />
+
+        <ImageButton
+            android:id="@+id/ib_delete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Delete item"
+            android:padding="4dp"
+            android:src="@android:drawable/ic_menu_delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvFoodName" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/holo_red_dark" />
 
         <View
             android:id="@+id/status_bar"
@@ -77,30 +106,30 @@
             app:layout_constraintStart_toEndOf="@id/iv_food_image" />
 
         <TextView
-            android:id="@+id/tvExpiration"
+            android:id="@+id/tv_expiration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="JUN-06-27"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/status_bar"
             app:layout_constraintStart_toStartOf="@id/status_bar"
-            app:layout_constraintTop_toTopOf="@id/status_bar" />
+            app:layout_constraintTop_toTopOf="@id/status_bar"
+            tools:text="JUN-06-27" />
 
         <TextView
             android:id="@+id/tv_time_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="3 days left"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/status_bar"
             app:layout_constraintEnd_toEndOf="@id/status_bar"
-            app:layout_constraintTop_toTopOf="@id/status_bar" />
+            app:layout_constraintTop_toTopOf="@id/status_bar"
+            tools:text="3 days left" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -41,8 +41,14 @@ class MainActivity : AppCompatActivity() {
             selectedStorages.add(it)
         }
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rvFoodList)
-        adapter = FoodAdapter(emptyList())
+        val recyclerView = findViewById<RecyclerView>(R.id.rv_food_list)
+        adapter = FoodAdapter(emptyList()) { item ->
+            val intent = Intent(this, AddFoodActivity::class.java).apply {
+                putExtra("EDIT_MODE", true)
+                putExtra("FOOD_ID", item.id)
+            }
+            startActivity(intent)
+        }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -141,7 +147,7 @@ class MainActivity : AppCompatActivity() {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.bindingAdapterPosition
                 val itemToDelete = adapter.getItemAt(position)
                 lifecycleScope.launch(Dispatchers.IO) {
                     database.foodDao().deleteFoodItem(itemToDelete)
@@ -207,7 +213,7 @@ class MainActivity : AppCompatActivity() {
             if (storageCount == 0) {
                 database.storageDao().insertStorageType(StorageType(name = "Refrigerator", description = "Main fridge", iconResId = R.drawable.ref_icon))
                 database.storageDao().insertStorageType(StorageType(name = "Freezer", description = "Deep freeze", iconResId = R.drawable.freezer_icon))
-                database.storageDao().insertStorageType(StorageType(name = "Pantry", description = "Dry goods", iconResId = R.drawable.crisper_icon))
+                database.storageDao().insertStorageType(StorageType(name = "Crisper", description = "Fresh produce", iconResId = R.drawable.crisper_icon))
             }
 
             val count = database.foodDao().getAllFoodSortedByExpiration().size

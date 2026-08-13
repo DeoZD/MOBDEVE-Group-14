@@ -2,6 +2,7 @@ package com.mobdeve.s15.group14.fridyi
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -11,29 +12,57 @@ import androidx.core.app.NotificationCompat
 class NotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val itemName = intent.getStringExtra("FOOD_NAME") ?: "An item"
+        // Compatibility: handle both old and new extra keys
+        val foodName = intent.getStringExtra(EXTRA_FOOD_NAME) ?: intent.getStringExtra("FOOD_NAME") ?: "Food Item"
+        val notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, System.currentTimeMillis().toInt())
+
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         val channelId = "fridyi_expiration_channel"
 
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        // Android 8.0+ requires a Notification Channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
                 "Food Expiration Alerts",
                 NotificationManager.IMPORTANCE_HIGH
-            )
-            manager.createNotificationChannel(channel)
+            ).apply {
+                description = "Notifications for items that are nearing expiration or expired"
+                enableVibration(true)
+            }
+            notificationManager.createNotificationChannel(channel)
         }
 
-        val notification = NotificationCompat.Builder(context, channelId)
+        val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
+        val contentPendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            openAppIntent,
+            pendingIntentFlags
+        )
+
+        val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
-            .setContentTitle("Food Expiry Warning!")
-            .setContentText("$itemName is about to expire or has expired!")
+            .setContentTitle("Expiring Soon Alert!")
+            .setContentText("$foodName is expiring soon! Consume or freeze it.")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
-            .build()
+            .setContentIntent(contentPendingIntent)
 
-        manager.notify(System.currentTimeMillis().toInt(), notification)
+        notificationManager.notify(notificationId, builder.build())
+    }
+
+    companion object {
+        const val EXTRA_FOOD_NAME = "extra_food_name"
+        const val EXTRA_NOTIFICATION_ID = "extra_notification_id"
     }
 }
