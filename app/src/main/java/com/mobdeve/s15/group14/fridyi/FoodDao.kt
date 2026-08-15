@@ -26,4 +26,7 @@ interface FoodDao {
 
     @Query("SELECT * FROM food_inventory WHERE name LIKE :query OR storageLocation LIKE :query")
     fun searchFoodItems(query: String): List<FoodItem>
+
+    @Query("SELECT * FROM food_inventory WHERE id = :id")
+    fun getFoodItemById(id: Long): FoodItem?
 }

@@ -41,6 +41,7 @@ class AddFoodActivity : AppCompatActivity() {
     private var selectedExpirationDate: Calendar = Calendar.getInstance()
     private var isEditMode = false
     private var foodId: Long = 0L
+    private var originalDateLogged: Long = System.currentTimeMillis()
 
     // OCR Image Picker for "Simple Scan"
     private val ocrImagePickerLauncher = registerForActivityResult(
@@ -107,10 +108,6 @@ class AddFoodActivity : AppCompatActivity() {
         setupSpinners()
         setupListeners()
         setupBottomNavigation()
-
-//        if (isEditMode) {
-//            loadFoodItemForEditing(foodId)
-//        }
     }
 
     private fun setupSpinners() {
@@ -122,6 +119,8 @@ class AddFoodActivity : AppCompatActivity() {
         // Storage Spinner from Database
         lifecycleScope.launch(Dispatchers.IO) {
             val storageTypes = database.storageDao().getAllStorageTypes().map { it.name }
+            val foodItem = if (isEditMode) database.foodDao().getFoodItemById(foodId) else null
+            
             withContext(Dispatchers.Main) {
                 val storageAdapter = ArrayAdapter(this@AddFoodActivity, android.R.layout.simple_spinner_item, storageTypes)
                 storageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -134,6 +133,52 @@ class AddFoodActivity : AppCompatActivity() {
                     binding.tvNoStorageWarning.visibility = View.GONE
                     binding.btnSave.isEnabled = true
                 }
+
+                if (isEditMode && foodItem != null) {
+                    prefillForm(foodItem)
+                }
+            }
+        }
+    }
+
+    private fun prefillForm(item: FoodItem) {
+        originalDateLogged = item.dateLogged
+        binding.etName.setText(item.name)
+        binding.etQuantity.setText(item.quantity.toString())
+        
+        // Unit Spinner
+        val unitAdapter = binding.spUnit.adapter
+        if (unitAdapter != null) {
+            for (i in 0 until unitAdapter.count) {
+                if (unitAdapter.getItem(i).toString() == item.unit) {
+                    binding.spUnit.setSelection(i)
+                    break
+                }
+            }
+        }
+
+        // Storage Spinner
+        val storageAdapter = binding.spStorage.adapter
+        if (storageAdapter != null) {
+            for (i in 0 until storageAdapter.count) {
+                if (storageAdapter.getItem(i).toString() == item.storageLocation) {
+                    binding.spStorage.setSelection(i)
+                    break
+                }
+            }
+        }
+
+        // Expiration Date
+        selectedExpirationDate.timeInMillis = item.expirationDate
+        val sdf = SimpleDateFormat("MM/dd/yyyy", Locale.US)
+        binding.etExpiration.setText(sdf.format(selectedExpirationDate.time))
+
+        // Image
+        item.imageUri?.let { uriString ->
+            if (uriString.isNotEmpty() && uriString != "content://camera_captured_bitmap") {
+                selectedImageUri = Uri.parse(uriString)
+                binding.ivItemPreview.setImageURI(selectedImageUri)
+                binding.ivItemPreview.setPadding(0, 0, 0, 0)
             }
         }
     }
@@ -319,9 +364,7 @@ class AddFoodActivity : AppCompatActivity() {
             return
         }
 
-        val currentTime = if (isEditMode) System.currentTimeMillis() else System.currentTimeMillis()
-        // Note: You might want to keep the original dateLogged if editing, 
-        // but for now we follow the existing pattern.
+        val currentTime = if (isEditMode) originalDateLogged else System.currentTimeMillis()
         
         val foodItem = FoodItem(
             id = if (isEditMode) foodId else 0L,
